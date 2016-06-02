@@ -5,10 +5,10 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{ $title }}</div>
+                    <div class="panel-heading">{{ $title or 'none'}}</div>
 
                     <div class="panel-body">
-                        {!! $content !!}
+                        {!! $content or 'no topic' !!}
                     </div>
                 </div>
             </div>

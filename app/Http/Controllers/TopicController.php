@@ -70,9 +70,12 @@ class TopicController extends Controller
     public function show($id=1)
     {
         //
-        $topic = $this->topic->find($id,['title','content','created_at','updated_at'])->toArray();
-        
-        $topic['content'] = EndaEditor::MarkDecode($topic['content']);
+        if($topic = $this->topic->find($id,['title','content','created_at','updated_at'])){
+            $topic = $topic->toArray();
+            $topic['content'] = EndaEditor::MarkDecode($topic['content']);
+        }else{
+            $topic = [];
+        }
         
         return view('topics.show',$topic);
     }
