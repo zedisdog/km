@@ -15,7 +15,11 @@ Route::get('/', function () {
     return redirect(route('topic.show',['id' => 1]));
 });
 
-Route::auth();
+//Route::auth();
+
+Route::get('login', 'Auth\AuthController@showLoginForm');
+Route::post('login', 'Auth\AuthController@login');
+Route::get('logout', 'Auth\AuthController@logout');
 
 Route::get('/home', 'HomeController@index');
 
