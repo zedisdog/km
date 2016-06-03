@@ -1,5 +1,8 @@
 基于laravel框架和Markdown的个人知识管理系统
 -----------------------------
+
+[demo](http://demo.scorpii.net)
+
 ###安装
 * 克隆代码
 
