@@ -57,8 +57,8 @@ class TopicController extends Controller
             'content' => 'required'
         ]);
 
-        $this->topic->create($request->all());
-        return redirect(route('topic.create'));
+        $topic = $this->topic->create($request->all());
+        return redirect(route('topic.show',['id' => $topic->id]));
     }
 
     /**
@@ -70,13 +70,13 @@ class TopicController extends Controller
     public function show($id=1)
     {
         //
-        if($topic = $this->topic->find($id,['title','content','created_at','updated_at'])){
+        if($topic = $this->topic->find($id,['id','title','content','created_at','updated_at'])){
             $topic = $topic->toArray();
             $topic['content'] = EndaEditor::MarkDecode($topic['content']);
         }else{
             $topic = [];
         }
-        
+
         return view('topics.show',$topic);
     }
 
@@ -104,7 +104,7 @@ class TopicController extends Controller
     {
         //
         $this->topic->update($request->all(), $id);
-        return redirect(route('topic.edit',['id' => $id]));
+        return redirect(route('topic.show',['id' => $id]));
     }
 
     /**
@@ -117,30 +117,30 @@ class TopicController extends Controller
     {
         //
     }
-    
+
     public function uploadImage()
     {
         $data = EndaEditor::uploadImgFile('topic-image');
 
         return json_encode($data);
     }
-    
+
     public function search(Request $request)
     {
         $this->validate($request,[
             'query' => 'required'
         ]);
-        
+
         $topics = Searchy::topics('title','ab','content')->query($request->input('query'))->get();
 
         $topics = collect(array_map(function($result) {
             return (new Topic())->fill(get_object_vars($result));
         }, Searchy::topics('title', 'ab','content')->query($request->input('query'))->get()));
 
-        
+
         return view('topics.search')->withTopics($topics)->withQuery($request->input('query'));
     }
-    
+
     public function ajaxTopics(Request $request){
         $query = $request->input('query');
         if($query){
