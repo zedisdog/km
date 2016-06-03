@@ -15,4 +15,14 @@ class TopicRepositoryTest extends TestCase
         $this->assertEquals('nthm', strtolower($this->app['TopicRepository']->ab('你Test好吗')));
         $this->assertEquals('nthm', strtolower($this->app['TopicRepository']->ab('你 TEST 好吗?')));
     }
+
+    public function testUpdate()
+    {
+        $result = $this->app['TopicRepository']->update([
+            'title' => '123',
+            'content' => 'hahaha'
+        ],1);
+
+        $this->assertNotFalse($result);
+    }
 }

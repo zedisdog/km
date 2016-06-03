@@ -37,4 +37,10 @@ class TopicRepository extends Repository
         $data['ab'] = $this->ab($data['title']);
         return parent::create($data);
     }
+    
+    public function update(array $data, $id)
+    {
+        $data['ab'] = $this->ab($data['title']);
+        return parent::update($data,$id);
+    }
 }
