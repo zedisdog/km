@@ -13,4 +13,4 @@
 
 * php artisan set 用户名 电子邮箱 密码
 
-**ps:注意storage bootstrap/cache public/topic-image这三个目录的权限**
+**ps:注意storage bootstrap/cache public/topic-image这三个目录的权限,另外请提交贡献代码到dev分支**
