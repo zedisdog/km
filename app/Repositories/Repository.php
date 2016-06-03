@@ -35,7 +35,7 @@ class Repository implements RepositoryInterface
 
     public function update(array $data, $id)
     {
-        return $this->model->where('id',$id)->update($data);
+        return $this->model->findOrFail($id)->update($data);
     }
 
     public function delete($id)
