@@ -99,7 +99,7 @@
         var _hmt = _hmt || [];
         (function() {
             var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?3a695d46d3680f8e4884599dc487b3b5";
+            hm.src = "//hm.baidu.com/hm.js?e3517551491d1b96a5191006397be069";
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
         })();
