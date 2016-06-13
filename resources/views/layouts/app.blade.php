@@ -95,5 +95,14 @@
 
     @yield('foot')
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?3a695d46d3680f8e4884599dc487b3b5";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 </body>
 </html>
