@@ -7,6 +7,8 @@ use App\Repositories\TopicRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use TomLingham\Searchy\Facades\Searchy;
 use YuanChao\Editor\EndaEditor;
 
@@ -117,6 +119,10 @@ class TopicController extends Controller
         //
     }
 
+    /**
+     * 上传图片
+     * @return string
+     */
     public function uploadImage()
     {
         $data = EndaEditor::uploadImgFile('topic-image');
@@ -124,27 +130,40 @@ class TopicController extends Controller
         return json_encode($data);
     }
 
+    /**
+     * 搜索
+     * @param Request $request
+     * @return mixed
+     */
     public function search(Request $request)
     {
+        $currentPage = $request->input('page')?$request->input('page'):1;
         $this->validate($request,[
             'query' => 'required'
         ]);
 
         $topics = Searchy::topics('title','ab','content')->query($request->input('query'))->get();
 
-        $topics = collect(array_map(function($result) {
-            return (new Topic())->fill(get_object_vars($result));
-        }, Searchy::topics('title', 'ab','content')->query($request->input('query'))->get()));
+//        $topics = collect(array_map(function($result) {
+//            return (new Topic())->fill(get_object_vars($result));
+//        }, Searchy::topics('title', 'ab','content')->query($request->input('query'))->get()));
 
-        return view('topics.search')->withTopics($topics)->withQuery($request->input('query'));
+        $page = new LengthAwarePaginator($topics,count($topics),2,$currentPage,['path' => route('topic.search'),'query'=>['query' => $request->input('query')]]);
+
+        return view('topics.search')->withTopics(array_slice($topics,($currentPage-1)*2,2))->withQuery($request->input('query'))->withPage($page);
     }
 
+    /**
+     * 获取记录列表
+     * @param Request $request
+     * @return array
+     */
     public function ajaxTopics(Request $request){
         $query = $request->input('query');
         if($query){
             $collection = collect(array_map(function($result) {
                 return (new Topic())->fill(get_object_vars($result));
-            }, Searchy::topics('title')->select('id','title')->query($query)->get()));
+            }, Searchy::driver('fuzzy')->topics('title')->select('id','title')->query($query)->get()));
 
             $result = [];
             foreach ($collection as $item){

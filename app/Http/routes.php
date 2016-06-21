@@ -27,6 +27,6 @@ Route::post('/topic/upload-image','TopicController@uploadImage');
 
 Route::get('/topic/ajax-topics','TopicController@ajaxTopics');
 
-Route::post('/topic/search',['as' => 'topic.search','uses' => 'TopicController@search']);
+Route::any('/topic/search',['as' => 'topic.search','uses' => 'TopicController@search']);
 
 Route::resource('topic', 'TopicController');

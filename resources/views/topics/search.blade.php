@@ -22,6 +22,7 @@
                         </div>
                         @endforeach
                     </div>
+                    {!! $page->render() !!}
                 </div>
             </div>
         </div>
