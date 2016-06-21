@@ -7,7 +7,6 @@ use App\Repositories\TopicRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TomLingham\Searchy\Facades\Searchy;
 use YuanChao\Editor\EndaEditor;
 
@@ -136,7 +135,6 @@ class TopicController extends Controller
         $topics = collect(array_map(function($result) {
             return (new Topic())->fill(get_object_vars($result));
         }, Searchy::topics('title', 'ab','content')->query($request->input('query'))->get()));
-
 
         return view('topics.search')->withTopics($topics)->withQuery($request->input('query'));
     }
