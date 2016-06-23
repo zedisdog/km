@@ -102,7 +102,7 @@ class HighlightSearchDriver extends BaseSearchDriver
             }
         }
 
-        if($key){
+        if($key !== null){
             unset($content[$key]);
         }
 
